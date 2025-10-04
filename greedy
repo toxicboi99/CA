@@ -1,0 +1,55 @@
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, q;
+    cin >> n >> q;
+    cin.ignore();
+
+    map<string, string> tagMap;
+    string currentTag;
+
+    for (int i = 0; i < n; i++) {
+        string line;
+        getline(cin, line);
+
+        line.erase(remove(line.begin(), line.end(), '\"'), line.end());
+
+        stringstream ss(line);
+        string word;
+        ss >> word;
+
+        if (word[1] == '/') {
+            size_t pos = currentTag.rfind('.');
+            if (pos != string::npos)
+                currentTag = currentTag.substr(0, pos);
+            else
+                currentTag = "";
+        } else {
+            word = word.substr(1);
+            if (!currentTag.empty())
+                currentTag += "." + word;
+            else
+                currentTag = word;
+
+            string attr, eq, val;
+            while (ss >> attr >> eq >> val) {
+                tagMap[currentTag + "~" + attr] = val;
+            }
+        }
+    }
+
+    for (int i = 0; i < q; i++) {
+        string query;
+        getline(cin, query);
+        if (tagMap.find(query) != tagMap.end())
+            cout << tagMap[query] << "\n";
+        else
+            cout << "Not Found!\n";
+    }
+
+    return 0;
+}
