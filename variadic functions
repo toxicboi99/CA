@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <limits.h>
+
+int sum_arr(int count, int arr[]) {
+    int result = 0;
+    for (int i = 0; i < count; i++) {
+        result += arr[i];
+    }
+    return result;
+}
+
+int min_arr(int count, int arr[]) {
+    int min_val = INT_MAX;
+    for (int i = 0; i < count; i++) {
+        if (arr[i] < min_val) min_val = arr[i];
+    }
+    return min_val;
+}
+
+int max_arr(int count, int arr[]) {
+    int max_val = INT_MIN;
+    for (int i = 0; i < count; i++) {
+        if (arr[i] > max_val) max_val = arr[i];
+    }
+    return max_val;
+}
+
+void test_case(int count, int arr[]) {
+    printf("Parameters: ");
+    for (int i = 0; i < count; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    printf("Sum: %d\n", sum_arr(count, arr));
+    printf("Min: %d\n", min_arr(count, arr));
+    printf("Max: %d\n", max_arr(count, arr));
+}
+
+int main() {
+    int number_of_test_cases;
+    scanf("%d", &number_of_test_cases);
+
+    for (int t = 0; t < number_of_test_cases; t++) {
+        int n;
+        scanf("%d", &n);
+        int arr[10] = {0};
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+
+        switch (n) {
+            case 3:
+            case 5:
+            case 10:
+                test_case(n, arr);
+                break;
+            default:
+                printf("Unsupported test case length: %d\n", n);
+        }
+    }
+
+    return 0;
+}
